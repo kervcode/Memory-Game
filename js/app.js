@@ -1,5 +1,6 @@
 const cards = Array.from(document.getElementsByClassName('card'));
 let toggleCards = [];
+let count = 0; 
 //Create a list that holds all of your cards
 const deck = document.querySelector('.deck');
 
@@ -47,6 +48,7 @@ function clickEvent() {
       if(targetedCard.classList.contains('card')){
         toggleCard(targetedCard);
         toggleCardArray(targetedCard);
+        
       }
     });
   };
@@ -62,10 +64,18 @@ function toggleCard(targetedCard) {
 
 function toggleCardArray(targetedCard) {
   toggleCards.push(targetedCard);
-  console.log(toggleCards);
+  counter();
 }; 
 
-//
+//add counter effect
+function counter() {  
+  if (toggleCards.length % 2 === 0) {
+    count++;
+    console.log(count);
+    const moves = document.querySelector('.moves');
+    moves.textContent = count;
+  }
+};
 
 {
 /*  - display the card's symbol (put this functionality in another function that you call from this one)
