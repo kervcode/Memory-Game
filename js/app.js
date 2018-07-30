@@ -1,4 +1,6 @@
-const cards = Array.from(document.getElementsByClassName('card'));//Create a list that holds all of your cards
+const cards = Array.from(document.getElementsByClassName('card'));
+let toggleCards = [];
+//Create a list that holds all of your cards
 const deck = document.querySelector('.deck');
 
 
@@ -16,6 +18,8 @@ function shuffleCard () {
   }
 }
 
+
+clickEvent()
 /*   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
@@ -35,14 +39,14 @@ function shuffle(array) {
   return array;
 }
 
-clickEvent();
 
+function clickEvent() {
 //set up the event listener for a card. If a card is clicked
-function clickEvent () {
     deck.addEventListener('click', event => {
       const targetedCard = event.target;
       if(targetedCard.classList.contains('card')){
         toggleCard(targetedCard);
+        toggleCardArray(targetedCard);
       }
     });
   };
@@ -55,15 +59,13 @@ function toggleCard(targetedCard) {
 }
 
 
-let moves = document.querySelector('.moves');
-//counter
-function counter () {
-    
-    
-    // for(moves = 0; toggleCard % 2 === 0; moves++){
-    //     console.log(moves);
-    // }
+
+function toggleCardArray(targetedCard) {
+  toggleCards.push(targetedCard);
+  console.log(toggleCards);
 }; 
+
+//
 
 {
 /*  - display the card's symbol (put this functionality in another function that you call from this one)
