@@ -1,25 +1,22 @@
-const cards = Array.from(document.getElementsByClassName('card'));
+const cards = shuffle(Array.from(document.getElementsByClassName('card')));
 let toggleCards = [];
 let count = 0; 
 //Create a list that holds all of your cards
 const deck = document.querySelector('.deck');
+// let allCards = document.querySelectorAll('.fa');
 
-
-
-
-
- //Display the cards on the page
-
- 
+//Display the cards on the page
 
 //shuffle the list of cards using the provided "shuffle" method below
-function shuffleCard () {
-  for(card of cards) {
-    shuffle(cards)
-  }
+function shuffleCard() {
+    deck.innerHTML = "";
+    for(card of cards){
+      deck.appendChild(card);
+      console.log(card)
+    }
 }
 
-
+shuffleCard ()
 clickEvent()
 /*   - loop through each card and create its HTML
  *   - add each card's HTML to the page
@@ -36,9 +33,9 @@ function shuffle(array) {
       array[currentIndex] = array[randomIndex];
       array[randomIndex] = temporaryValue;
   }
-
   return array;
 }
+
 
 
 function clickEvent() {
@@ -53,15 +50,13 @@ function clickEvent() {
     });
   };
 
-
 //toggle card
 function toggleCard(targetedCard) {
   targetedCard.classList.toggle('open');//open the card
   targetedCard.classList.toggle('show');//display the card's symbol
-}
+};
 
-
-
+//adding clicked card to Array
 function toggleCardArray(targetedCard) {
   toggleCards.push(targetedCard);
   counter();
@@ -69,13 +64,15 @@ function toggleCardArray(targetedCard) {
 
 //add counter effect
 function counter() {  
-  if (toggleCards.length % 2 === 0) {
+  if (toggleCards.length % 2 === 0){
     count++;
     console.log(count);
     const moves = document.querySelector('.moves');
     moves.textContent = count;
   }
 };
+
+//add timer function
 
 {
 /*  - display the card's symbol (put this functionality in another function that you call from this one)
