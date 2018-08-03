@@ -4,6 +4,7 @@ let matched = [];
 let clickedCard;
 let previousCard;
 let currentCard;
+let count = 0;
 /*
  * Create a list that holds all of your cards
  */
@@ -69,6 +70,7 @@ function matchedCards() {
     cardIsMatch();  
     CardDontMatch();  
   }
+  counter();
 }
 
 function cardIsMatch() {
@@ -94,11 +96,21 @@ function CardDontMatch() {
     
 };
 
+//increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+function counter()  {
+ if (openCards.length % 2 === 0){
+   let moves = document.querySelector('.moves');
+  count++;
+  moves.textContent = count;
+ };
+};
+
+
 
 
 /*
 *    + 
 *    + 
-*    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
+*    + 
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
