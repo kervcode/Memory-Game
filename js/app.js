@@ -1,5 +1,6 @@
 let deck = document.querySelector('.deck');
 let openCards = [];
+let matched = [];
 let clickedCard;
 let previousCard;
 let currentCard;
@@ -29,7 +30,7 @@ function shuffle(array) {
 
   while (currentIndex !== 0) {
     randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
+    currentIndex -= 1; 
     temporaryValue = array[currentIndex];
     array[currentIndex] = array[randomIndex];
     array[randomIndex] = temporaryValue;
@@ -66,7 +67,7 @@ function matchedCards() {
     previousCard = openCards[0];
     currentCard = openCards[1];
     cardIsMatch();  
-    CardDontMatch ();  
+    CardDontMatch();  
   }
 }
 
@@ -76,22 +77,28 @@ function cardIsMatch() {
     previousCard.classList.add('open');
     currentCard.classList.add('open');
     openCards = [];
-  } 
-}
+    matched.push(previousCard,currentCard);
+    console.log(matched);
+  };
+};
 
-function CardDontMatch () {
+//if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+function CardDontMatch() {
  if (previousCard.firstElementChild.className !== currentCard.firstElementChild.className){
+   setTimeout(function(){
     previousCard.classList.remove('open', 'show');
-    currentCard.classList.remove('open', 'show');  
+    currentCard.classList.remove('open', 'show');
+   }, 600);      
     openCards = [];  
- }
+ };
     
-}
+};
+
 
 
 /*
 *    + 
-*    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
+*    + 
 *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
