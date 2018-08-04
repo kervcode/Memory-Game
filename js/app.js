@@ -8,6 +8,7 @@ let count = 0;
 let listOfStars = document.querySelectorAll('.stars li');
 let stars = document.querySelector('.stars');
 let star = [];
+const restart = document.querySelector('.restart');
 /*
  * Create a list that holds all of your cards
  */
@@ -51,11 +52,12 @@ function shuffle(array) {
 */
 deck.addEventListener('click', function (event) {
   clickedCard = event.target;
-  showCards();  
+  showCards(); 
+  counter();
 });
 
 function showCards() {
-  clickedCard.classList.add('open', 'show');
+  clickedCard.classList.add('open', 'show', 'disable');
   matchedCards();
 };
 
@@ -70,26 +72,26 @@ function matchedCards() {
     cardIsMatch();  
     CardDontMatch();  
   };
-  counter();
+  // counter();
 };
 
 function cardIsMatch() {
   if (previousCard.firstElementChild.className === currentCard.firstElementChild.className) {
     //if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-    previousCard.classList.add('open');
-    currentCard.classList.add('open');
+    previousCard.classList.add('open', 'disable');
+    currentCard.classList.add('open', 'disable');
     openCards = [];
     matched.push(previousCard,currentCard);
-    // console.log(matched);
   };
+  finalScore();
 };
 
 //if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
 function CardDontMatch() {
  if (previousCard.firstElementChild.className !== currentCard.firstElementChild.className){
    setTimeout(function(){
-    previousCard.classList.remove('open', 'show');
-    currentCard.classList.remove('open', 'show');
+    previousCard.classList.remove('open', 'show', 'disable');
+    currentCard.classList.remove('open', 'show', 'disable');
    }, 600);      
     openCards = [];  
  };    
@@ -102,17 +104,17 @@ function counter()  {
   count++;
   moves.textContent = count;
  };
- StarGrader();
+//  StarGrader();
 };
 
-function StarGrader() {  
-  if(count > 1 && count % 4 === 0){
-    // for (let i = listOfStars.length; i > 1; i--) {
-    for (star of listOfStars) {
-      stars.removeChild(star);
-    }
-  };
-};
+// function StarGrader() {  
+//   if(count > 1 && count % 4 === 0){
+//     // for (let i = listOfStars.length; i > 1; i--) {
+//     for (star of listOfStars) {
+//       stars.removeChild(star);
+//     }
+//   };
+// };
 
 
 /*
@@ -122,5 +124,29 @@ function StarGrader() {
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 function finalScore() {
-  // if (matched.length === )
-}
+  if (matched.length === 16 && cardsList.length === 16) {
+    matched.forEach(function (element){
+      element.classList.add('match', 'disable');
+    });
+    alert('you win the game');
+  };
+};
+
+//Reset Game
+function resetGame() {
+  openCards = [];
+  matched = [];
+  clickedCard = [];
+  previousCard = [];
+  currentCard = [];
+  count = 0;
+  displayCards();
+
+};
+
+restart.addEventListener('click', function() {
+  resetGame();
+  console.log('game has restarted');
+});
+
+
