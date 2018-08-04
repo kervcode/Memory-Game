@@ -5,6 +5,9 @@ let clickedCard;
 let previousCard;
 let currentCard;
 let count = 0;
+let listOfStars = document.querySelectorAll('.stars li');
+let stars = document.querySelector('.stars');
+let star = [];
 /*
  * Create a list that holds all of your cards
  */
@@ -40,7 +43,6 @@ function shuffle(array) {
   return array;
 }
 
-
 /*
 * set up the event listener for a card. If a card is clicked:
 *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -49,15 +51,13 @@ function shuffle(array) {
 */
 deck.addEventListener('click', function (event) {
   clickedCard = event.target;
-  showCards();
-  
-  
+  showCards();  
 });
 
 function showCards() {
   clickedCard.classList.add('open', 'show');
   matchedCards();
-}
+};
 
 function matchedCards() {
   //add card to a list of open cards
@@ -69,9 +69,9 @@ function matchedCards() {
     currentCard = openCards[1];
     cardIsMatch();  
     CardDontMatch();  
-  }
+  };
   counter();
-}
+};
 
 function cardIsMatch() {
   if (previousCard.firstElementChild.className === currentCard.firstElementChild.className) {
@@ -80,7 +80,7 @@ function cardIsMatch() {
     currentCard.classList.add('open');
     openCards = [];
     matched.push(previousCard,currentCard);
-    console.log(matched);
+    // console.log(matched);
   };
 };
 
@@ -92,8 +92,7 @@ function CardDontMatch() {
     currentCard.classList.remove('open', 'show');
    }, 600);      
     openCards = [];  
- };
-    
+ };    
 };
 
 //increment the move counter and display it on the page (put this functionality in another function that you call from this one)
@@ -103,9 +102,17 @@ function counter()  {
   count++;
   moves.textContent = count;
  };
+ StarGrader();
 };
 
-
+function StarGrader() {  
+  if(count > 1 && count % 4 === 0){
+    // for (let i = listOfStars.length; i > 1; i--) {
+    for (star of listOfStars) {
+      stars.removeChild(star);
+    }
+  };
+};
 
 
 /*
@@ -114,3 +121,6 @@ function counter()  {
 *    + 
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
+function finalScore() {
+  // if (matched.length === )
+}
