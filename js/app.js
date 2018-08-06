@@ -8,6 +8,7 @@ let count = 0;
 let listOfStars = document.querySelectorAll('.stars li');
 let stars = document.querySelector('.stars');
 let star = [];
+let moves = document.querySelector('.moves');
 const restart = document.querySelector('.restart');
 /*
  * Create a list that holds all of your cards
@@ -61,12 +62,9 @@ function showCards() {
   matchedCards();
 };
 
-function matchedCards() {
-  //add card to a list of open cards
-  openCards.push(clickedCard);
-  // console.log(openCards);
-  //check if open cards are matched
-  if(openCards.length === 2) {
+function matchedCards() { 
+  openCards.push(clickedCard); //add card to a list of open cards
+  if(openCards.length === 2) { //check if open cards are matched
     previousCard = openCards[0];
     currentCard = openCards[1];
     cardIsMatch();  
@@ -78,8 +76,8 @@ function matchedCards() {
 function cardIsMatch() {
   if (previousCard.firstElementChild.className === currentCard.firstElementChild.className) {
     //if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
-    previousCard.classList.add('open', 'disable');
-    currentCard.classList.add('open', 'disable');
+    previousCard.classList.add('open','match','disable');
+    currentCard.classList.add('open', 'match','disable');
     openCards = [];
     matched.push(previousCard,currentCard);
   };
@@ -100,21 +98,21 @@ function CardDontMatch() {
 //increment the move counter and display it on the page (put this functionality in another function that you call from this one)
 function counter()  {
  if (openCards.length % 2 === 0){
-   let moves = document.querySelector('.moves');
+   
   count++;
   moves.textContent = count;
  };
 //  StarGrader();
 };
 
-// function StarGrader() {  
-//   if(count > 1 && count % 4 === 0){
-//     // for (let i = listOfStars.length; i > 1; i--) {
-//     for (star of listOfStars) {
-//       stars.removeChild(star);
-//     }
-//   };
-// };
+function StarGrader() {  
+  if(count > 1 && count % 4 === 0){
+    // for (let i = listOfStars.length; i > 1; i--) {
+    for (star of listOfStars) {
+      stars.removeChild(star);
+    }
+  };
+};
 
 
 /*
@@ -128,9 +126,10 @@ function finalScore() {
     matched.forEach(function (element){
       element.classList.add('match', 'disable');
     });
-    alert('you win the game');
+    document.querySelector('.displayMessage').style.visibility = 'visible';
   };
 };
+
 
 //Reset Game
 function resetGame() {
@@ -139,11 +138,16 @@ function resetGame() {
   clickedCard = [];
   previousCard = [];
   currentCard = [];
-  count = 0;
   displayCards();
-
+  moves.textContent = 0;
+  cardsList.forEach(function (element){
+    element.classList.remove('open', 'show', 'match','disable');
+  });
 };
-
+/*
+*
+*reset game event listener
+*/
 restart.addEventListener('click', function() {
   resetGame();
   console.log('game has restarted');
