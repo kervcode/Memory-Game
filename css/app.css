@@ -111,3 +111,39 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+.displayMessage {
+    position : absolute;
+    top: 36%;
+    left: 33%;
+    height: 240px;
+    width: 500px;
+    background-color: #F5F5DC;
+    visibility: hidden;
+    display: flex;
+    flex-direction: column;  
+}
+
+.displayHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border-bottom: #2e3d49 1px solid;
+}
+
+.gameResults {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.gameOptions {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+.displayMessage button {
+    cursor: pointer;
+}
