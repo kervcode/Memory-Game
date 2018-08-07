@@ -115,13 +115,14 @@ h1 {
 .displayMessage {
     position : absolute;
     top: 36%;
-    left: 33%;
+    left: 37%;
     height: 240px;
     width: 500px;
     background-color: #F5F5DC;
     visibility: hidden;
     display: flex;
     flex-direction: column;  
+    border-radius: 4px;
 }
 
 .displayHeader {
@@ -141,9 +142,12 @@ h1 {
 .gameOptions {
     display: flex;
     justify-content: space-around;
-    margin-top: 40px;
+    margin-top: 30px;
 }
 
-.displayMessage button {
+.gameOptions button {
     cursor: pointer;
+    border-radius: 4px;
+    width: 100px;
+    height: 30px;
 }
