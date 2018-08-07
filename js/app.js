@@ -9,6 +9,7 @@ let listOfStars = document.querySelectorAll('.stars li');
 let stars = document.querySelector('.stars');
 let star = [];
 let moves = document.querySelector('.moves');
+// let isFirstclick = false;
 const restart = document.querySelector('.restart');
 const playAgain = document.querySelector('.playAgain');
 const messageStatus = document.querySelector('.displayMessage');
@@ -58,6 +59,13 @@ deck.addEventListener('click', function (event) {
   clickedCard = event.target;
   showCards(); 
   counter();
+  startTimer();
+  // if(isFirstclick){
+  //   //starting timer
+  //   startTimer()
+  //   //change first click
+  //   isFirstclick = false;
+  // }
 });
 
 function showCards() {
@@ -195,22 +203,22 @@ ExitGame.addEventListener('click', function (){
 *
 *https://matthewcranford.com/memory-game-walkthrough-part-6-the-clock/
 */
-// const timerContainer = document.querySelector('.gameTimer');
-// let liveTimer,
-//     totalSeconds = 0;
-// // let isFirstClick = false;
+const timerContainer = document.querySelector('.gameTimer');
+let liveTimer,
+    totalSeconds = 0;
 
-// //set default value to the timer's container
-// timerContainer.innerHTML = totalSeconds;
 
-// function startTimer() {
-//   liveTimer = setInterval(function() {
-//     totalSeconds++;
-//     timerContainer.innerHTML = totalSeconds;
-//   }, 1000);
-// }
+//set default value to the timer's container
+timerContainer.innerHTML = totalSeconds;
 
-let clockOff = true;
+function startTimer() {
+  liveTimer = setInterval(function() {
+    totalSeconds++;
+    timerContainer.innerHTML = totalSeconds;
+  }, 1000);
+}
+
+
 
 
 
