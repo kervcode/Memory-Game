@@ -10,6 +10,9 @@ let stars = document.querySelector('.stars');
 let star = [];
 let moves = document.querySelector('.moves');
 const restart = document.querySelector('.restart');
+const playAgain = document.querySelector('.playAgain');
+const messageStatus = document.querySelector('.displayMessage');
+const ExitGame = document.querySelector('.exitGame');
 /*
  * Create a list that holds all of your cards
  */
@@ -122,14 +125,37 @@ function StarGrader() {
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 function finalScore() {
+
+  /*
+  *function scope variable
+   */
+  const gameTime = document.querySelector('.gameTime');
+  const gameMoves = document.querySelector('.gameMoves');
+  const gameStars = document.querySelector('.gameStars');
+  
+
   if (matched.length === 16 && cardsList.length === 16) {
     matched.forEach(function (element){
       element.classList.add('match', 'disable');
     });
-    document.querySelector('.displayMessage').style.visibility = 'visible';
+    gameTime.textContent = 'Time : ' + '2:00';
+    gameMoves.textContent = 'Moves: ' + count;
+    gameStars.textContent = 'Stars: ' + count;
+    showMessage();
   };
 };
 
+function showMessage() {
+  messageStatus.style.visibility = 'visible';
+};
+
+function hideMessage() {
+  messageStatus.style.visibility = 'hidden';
+}
+
+function getOut() {
+  close();
+}
 
 //Reset Game
 function resetGame() {
@@ -152,5 +178,41 @@ restart.addEventListener('click', function() {
   resetGame();
   console.log('game has restarted');
 });
+
+//responding to click on playAgain button
+playAgain.addEventListener('click', function (){
+  hideMessage();
+  resetGame();
+});
+
+ExitGame.addEventListener('click', function (){
+  getOut();
+});
+
+/*
+*adding a timer
+* source is from https://drive.google.com/file/d/1blJv3xK22ozh80RuUC2iA-9_SGQKsJ9E/edit
+*
+*https://matthewcranford.com/memory-game-walkthrough-part-6-the-clock/
+*/
+// const timerContainer = document.querySelector('.gameTimer');
+// let liveTimer,
+//     totalSeconds = 0;
+// // let isFirstClick = false;
+
+// //set default value to the timer's container
+// timerContainer.innerHTML = totalSeconds;
+
+// function startTimer() {
+//   liveTimer = setInterval(function() {
+//     totalSeconds++;
+//     timerContainer.innerHTML = totalSeconds;
+//   }, 1000);
+// }
+
+let clockOff = true;
+
+
+
 
 
