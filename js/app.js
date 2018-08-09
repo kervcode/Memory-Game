@@ -9,7 +9,17 @@ let listOfStars = document.querySelectorAll('.stars li');
 let stars = document.querySelector('.stars');
 let star = [];
 let moves = document.querySelector('.moves');
-// let isFirstclick = false;
+/*
+*adding a timer
+* source is from https://drive.google.com/file/d/1blJv3xK22ozh80RuUC2iA-9_SGQKsJ9E/edit
+*/
+    let liveTimer,
+        totalSeconds = 0;
+    const timerContainer = document.querySelector('.gameTimer');
+    let isFirstclick = false;
+    //set default value to the timer's container
+    timerContainer.innerHTML = totalSeconds;
+//=====================================================
 const restart = document.querySelector('.restart');
 const playAgain = document.querySelector('.playAgain');
 const messageStatus = document.querySelector('.displayMessage');
@@ -30,7 +40,7 @@ function displayCards() {
   shuffle(cardsList);
   for (let card of cardsList) {
     deck.appendChild(card);
-  }
+  }; 
 };
 displayCards();
 
@@ -59,13 +69,13 @@ deck.addEventListener('click', function (event) {
   clickedCard = event.target;
   showCards(); 
   counter();
-  startTimer();
-  // if(isFirstclick){
-  //   //starting timer
-  //   startTimer()
-  //   //change first click
-  //   isFirstclick = false;
-  // }
+  // startTimer();
+  if(isFirstclick === false){
+    //starting timer
+    startTimer()
+    //change first click
+    isFirstclick = true;
+  }
 });
 
 function showCards() {
@@ -109,18 +119,17 @@ function CardDontMatch() {
 //increment the move counter and display it on the page (put this functionality in another function that you call from this one)
 function counter()  {
  if (openCards.length % 2 === 0){
-   
-  count++;
-  moves.textContent = count;
+    count++;
+    moves.textContent = count;
  };
-//  StarGrader();
+StarGrader();
 };
 
 function StarGrader() {  
-  if(count > 1 && count % 4 === 0){
+  if(count % 4 === 0){
     // for (let i = listOfStars.length; i > 1; i--) {
     for (star of listOfStars) {
-      stars.removeChild(star);
+      stars.firstElementChild.style.display = 'none';
     }
   };
 };
@@ -133,7 +142,6 @@ function StarGrader() {
 *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
 */
 function finalScore() {
-
   /*
   *function scope variable
    */
@@ -150,6 +158,7 @@ function finalScore() {
     gameMoves.textContent = 'Moves: ' + count;
     gameStars.textContent = 'Stars: ' + count;
     showMessage();
+    stopTimer();
   };
 };
 
@@ -161,12 +170,15 @@ function hideMessage() {
   messageStatus.style.visibility = 'hidden';
 }
 
-function getOut() {
-  close();
-}
+// function getOut() {
+//   close();
+// }
 
 //Reset Game
 function resetGame() {
+  cardsList.forEach(function (element){
+    element.classList.remove('open', 'show', 'match','disable');
+  });
   openCards = [];
   matched = [];
   clickedCard = [];
@@ -174,9 +186,7 @@ function resetGame() {
   currentCard = [];
   displayCards();
   moves.textContent = 0;
-  cardsList.forEach(function (element){
-    element.classList.remove('open', 'show', 'match','disable');
-  });
+  totalSeconds = 0;
 };
 /*
 *
@@ -194,31 +204,24 @@ playAgain.addEventListener('click', function (){
 });
 
 ExitGame.addEventListener('click', function (){
-  getOut();
+  // getOut();
+  close();
 });
 
 /*
 *adding a timer
 * source is from https://drive.google.com/file/d/1blJv3xK22ozh80RuUC2iA-9_SGQKsJ9E/edit
-*
-*https://matthewcranford.com/memory-game-walkthrough-part-6-the-clock/
 */
-const timerContainer = document.querySelector('.gameTimer');
-let liveTimer,
-    totalSeconds = 0;
-
-
-//set default value to the timer's container
-timerContainer.innerHTML = totalSeconds;
-
 function startTimer() {
   liveTimer = setInterval(function() {
-    totalSeconds++;
     timerContainer.innerHTML = totalSeconds;
+    totalSeconds++;
   }, 1000);
+};
+
+function stopTimer(){
+  clearInterval(liveTimer);
 }
-
-
 
 
 
