@@ -9,16 +9,7 @@ let listOfStars = document.querySelectorAll('.stars li');
 let stars = document.querySelector('.stars');
 let star = [];
 let moves = document.querySelector('.moves');
-/*
-*adding a timer
-* source is from https://drive.google.com/file/d/1blJv3xK22ozh80RuUC2iA-9_SGQKsJ9E/edit
-*/
-    let liveTimer,
-        totalSeconds = 0;
-    const timerContainer = document.querySelector('.gameTimer');
-    let isFirstclick = false;
-    //set default value to the timer's container
-    timerContainer.innerHTML = totalSeconds;
+
 //=====================================================
 const restart = document.querySelector('.restart');
 const playAgain = document.querySelector('.playAgain');
@@ -60,22 +51,20 @@ function shuffle(array) {
 }
 
 /*
-* set up the event listener for a card. If a card is clicked:
-*  - display the card's symbol (put this functionality in another function that you call from this one)
-*  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
-*  - if the list already has another card, check to see if the two cards match
+  * set up the event listener for a card. If a card is clicked:
+  *  - display the card's symbol (put this functionality in another function that you call from this one)
+  *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
+  *  - if the list already has another card, check to see if the two cards match
 */
 deck.addEventListener('click', function (event) {
   clickedCard = event.target;
   showCards(); 
-  counter();
-  // startTimer();
-  if(isFirstclick === false){
-    //starting timer
-    startTimer()
-    //change first click
-    isFirstclick = true;
+  // counter();
+  if (clockOff) {
+    startClock();
+    clockOff = false;
   }
+  
 });
 
 function showCards() {
@@ -91,7 +80,7 @@ function matchedCards() {
     cardIsMatch();  
     CardDontMatch();  
   };
-  // counter();
+  counter();
 };
 
 function cardIsMatch() {
@@ -121,19 +110,38 @@ function counter()  {
  if (openCards.length % 2 === 0){
     count++;
     moves.textContent = count;
+    checkScore();
  };
-StarGrader();
 };
 
-function StarGrader() {  
-  if(count % 4 === 0){
-    // for (let i = listOfStars.length; i > 1; i--) {
-    for (star of listOfStars) {
-      stars.firstElementChild.style.display = 'none';
+
+function checkScore(){  
+  if (count === 8 || count === 14){
+    hideStar();
+  }  
+};
+
+function hideStar() {
+  const starList = document.querySelectorAll('.stars li');
+  for(star of starList){
+    if(star.style.display !== 'none') {
+      star.style.display = 'none';
+      break;
     }
-  };
+  }
 };
 
+function getStars() {
+  stars = document.querySelectorAll('.stars li');
+  starCount = 0;
+  for (star of stars){
+    if(star.style.display !== 'none') {
+      starCount++;
+    }
+  }
+  console.log(starCount);
+  return starCount;
+}
 
 /*
 *    + 
@@ -148,17 +156,19 @@ function finalScore() {
   const gameTime = document.querySelector('.gameTime');
   const gameMoves = document.querySelector('.gameMoves');
   const gameStars = document.querySelector('.gameStars');
+  const clockTime = document.querySelector('.clock').innerHTML;
+  const stars = getStars();
   
 
   if (matched.length === 16 && cardsList.length === 16) {
     matched.forEach(function (element){
       element.classList.add('match', 'disable');
     });
-    gameTime.textContent = 'Time : ' + '2:00';
-    gameMoves.textContent = 'Moves: ' + count;
-    gameStars.textContent = 'Stars: ' + count;
+    gameTime.innerHTML =`Time : ${clockTime}`;
+    gameMoves.innerHTML = 'Moves: ' + moves.innerHTML;
+    gameStars.innerHTML = `Stars: ${stars}`;
     showMessage();
-    stopTimer();
+    stopClock();
   };
 };
 
@@ -186,7 +196,11 @@ function resetGame() {
   currentCard = [];
   displayCards();
   moves.textContent = 0;
-  totalSeconds = 0;
+  time = 0;
+  stopClock();
+  clockOff = true;
+  displayTime();
+  resetStars();
 };
 /*
 *
@@ -194,7 +208,7 @@ function resetGame() {
 */
 restart.addEventListener('click', function() {
   resetGame();
-  console.log('game has restarted');
+  hideMessage();
 });
 
 //responding to click on playAgain button
@@ -204,24 +218,47 @@ playAgain.addEventListener('click', function (){
 });
 
 ExitGame.addEventListener('click', function (){
-  // getOut();
   close();
 });
 
-/*
-*adding a timer
-* source is from https://drive.google.com/file/d/1blJv3xK22ozh80RuUC2iA-9_SGQKsJ9E/edit
-*/
-function startTimer() {
-  liveTimer = setInterval(function() {
-    timerContainer.innerHTML = totalSeconds;
-    totalSeconds++;
+// code sample below is inspired from Matthew Cranford walkthrough https://matthewcranford.com/memory-game-walkthrough-part-6-the-clock/
+function startClock() {
+  time = 0;
+  clockId = setInterval(() => {
+    time++;
+    console.log(time);
+    displayTime();
   }, 1000);
+}
+
+let clockId;
+let clockOff = true;
+let time = 0;
+
+
+function displayTime() {
+  const minutes = Math.floor(time /60);
+  const seconds = Math.floor(time % 60);
+  const clock = document.querySelector('.clock');
+  console.log(clock);
+  if (seconds < 10) {
+    clock.innerHTML = `${minutes}:0${seconds}`;
+  } else {
+    clock.innerHTML = `${minutes}:${seconds}`;
+  }
 };
 
-function stopTimer(){
-  clearInterval(liveTimer);
-}
+function stopClock() {
+  clearInterval(clockId);
+};
+
+function resetStars(){
+  stars = 0;
+  const starList = document.querySelectorAll('.stars li');
+  for (star of starList){
+    star.style.display = 'inline';
+  }
+};
 
 
 
