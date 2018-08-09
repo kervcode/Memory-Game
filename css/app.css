@@ -115,9 +115,9 @@ h1 {
 .displayMessage {
     position : absolute;
     top: 36%;
-    left: %;
+    left: 35%;
     height: 240px;
-    width: 400px;
+    width: 480px;
     background-color: #F5F5DC;
     visibility: hidden;
     display: flex;
@@ -128,7 +128,7 @@ h1 {
 .displayHeader {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     border-bottom: #2e3d49 1px solid;
 }
 
