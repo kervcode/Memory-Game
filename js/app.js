@@ -139,7 +139,7 @@ function getStars() {
       starCount++;
     }
   }
-  console.log(starCount);
+  
   return starCount;
 }
 
@@ -179,10 +179,6 @@ function showMessage() {
 function hideMessage() {
   messageStatus.style.visibility = 'hidden';
 }
-
-// function getOut() {
-//   close();
-// }
 
 //Reset Game
 function resetGame() {
@@ -226,7 +222,6 @@ function startClock() {
   time = 0;
   clockId = setInterval(() => {
     time++;
-    console.log(time);
     displayTime();
   }, 1000);
 }
