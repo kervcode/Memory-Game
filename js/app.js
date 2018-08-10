@@ -152,24 +152,27 @@ function finalScore() {
   /*
   *function scope variable
    */
-  const gameTime = document.querySelector('.gameTime');
-  const gameMoves = document.querySelector('.gameMoves');
-  const gameStars = document.querySelector('.gameStars');
-  const clockTime = document.querySelector('.clock').innerHTML;
-  const stars = getStars();
-  
+  setTimeout(function(){
+    const gameTime = document.querySelector('.gameTime');
+    const gameMoves = document.querySelector('.gameMoves');
+    const gameStars = document.querySelector('.gameStars');
+    const clockTime = document.querySelector('.clock').innerHTML;
+    const stars = getStars();
+    
 
-  if (matched.length === 16 && cardsList.length === 16) {
-    matched.forEach(function (element){
-      element.classList.add('match', 'disable');
-    });
-    gameTime.innerHTML =`Time : ${clockTime}`;
-    gameMoves.innerHTML = 'Moves: ' + moves.innerHTML;
-    gameStars.innerHTML = `Stars: ${stars}`;
-    showMessage();
-    stopClock();
-  }
+    if (matched.length === 16 && cardsList.length === 16) {
+      matched.forEach(function (element){
+        element.classList.add('match', 'disable');
+      });
+      gameTime.innerHTML =`Time : ${clockTime}`;
+      gameMoves.innerHTML = 'Moves: ' + moves.innerHTML;
+      gameStars.innerHTML = `Stars: ${stars}`;
+      showMessage();
+      stopClock();
+    }
+  }, 0);
 }
+
 
 function showMessage() {
   messageStatus.style.visibility = 'visible';
@@ -235,7 +238,6 @@ function displayTime() {
   const minutes = Math.floor(time /60);
   const seconds = Math.floor(time % 60);
   const clock = document.querySelector('.clock');
-  console.log(clock);
   if (seconds < 10) {
     clock.innerHTML = `${minutes}:0${seconds}`;
   } else {
