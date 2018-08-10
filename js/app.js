@@ -5,7 +5,7 @@ let clickedCard;
 let previousCard;
 let currentCard;
 let count = 0;
-let listOfStars = document.querySelectorAll('.stars li');
+// let listOfStars = document.querySelectorAll('.stars li');
 let stars = document.querySelector('.stars');
 let star = [];
 let moves = document.querySelector('.moves');
@@ -31,8 +31,8 @@ function displayCards() {
   shuffle(cardsList);
   for (let card of cardsList) {
     deck.appendChild(card);
-  }; 
-};
+  }
+}
 displayCards();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -59,18 +59,17 @@ function shuffle(array) {
 deck.addEventListener('click', function (event) {
   clickedCard = event.target;
   showCards(); 
-  // counter();
   if (clockOff) {
     startClock();
     clockOff = false;
   }
-  
+  counter();
 });
 
 function showCards() {
   clickedCard.classList.add('open', 'show', 'disable');
   matchedCards();
-};
+}
 
 function matchedCards() { 
   openCards.push(clickedCard); //add card to a list of open cards
@@ -79,9 +78,9 @@ function matchedCards() {
     currentCard = openCards[1];
     cardIsMatch();  
     CardDontMatch();  
-  };
-  counter();
-};
+  }
+  // counter();
+}
 
 function cardIsMatch() {
   if (previousCard.firstElementChild.className === currentCard.firstElementChild.className) {
@@ -90,9 +89,9 @@ function cardIsMatch() {
     currentCard.classList.add('open', 'match','disable');
     openCards = [];
     matched.push(previousCard,currentCard);
-  };
+  }
   finalScore();
-};
+}
 
 //if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
 function CardDontMatch() {
@@ -102,8 +101,8 @@ function CardDontMatch() {
     currentCard.classList.remove('open', 'show', 'disable');
    }, 600);      
     openCards = [];  
- };    
-};
+ }   
+}
 
 //increment the move counter and display it on the page (put this functionality in another function that you call from this one)
 function counter()  {
@@ -111,15 +110,15 @@ function counter()  {
     count++;
     moves.textContent = count;
     checkScore();
- };
-};
+ }
+}
 
 
 function checkScore(){  
   if (count === 8 || count === 14){
     hideStar();
   }  
-};
+}
 
 function hideStar() {
   const starList = document.querySelectorAll('.stars li');
@@ -129,7 +128,7 @@ function hideStar() {
       break;
     }
   }
-};
+}
 
 function getStars() {
   stars = document.querySelectorAll('.stars li');
@@ -169,12 +168,12 @@ function finalScore() {
     gameStars.innerHTML = `Stars: ${stars}`;
     showMessage();
     stopClock();
-  };
-};
+  }
+}
 
 function showMessage() {
   messageStatus.style.visibility = 'visible';
-};
+}
 
 function hideMessage() {
   messageStatus.style.visibility = 'hidden';
@@ -191,13 +190,14 @@ function resetGame() {
   previousCard = [];
   currentCard = [];
   displayCards();
-  moves.textContent = 0;
+  moves.innerHTML = 0;
+  count = 0;
   time = 0;
   stopClock();
   clockOff = true;
   displayTime();
   resetStars();
-};
+}
 /*
 *
 *reset game event listener
@@ -241,11 +241,11 @@ function displayTime() {
   } else {
     clock.innerHTML = `${minutes}:${seconds}`;
   }
-};
+}
 
 function stopClock() {
   clearInterval(clockId);
-};
+}
 
 function resetStars(){
   stars = 0;
@@ -253,7 +253,7 @@ function resetStars(){
   for (star of starList){
     star.style.display = 'inline';
   }
-};
+}
 
 
 
